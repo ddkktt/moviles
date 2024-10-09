@@ -1,4 +1,4 @@
-import 'package:entregafinal/screens/mainScreen.dart';
+import 'package:entregafinal/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -8,13 +8,13 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("Login"),
+        const Text("Login"),
         ElevatedButton(
             onPressed: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MainScreen()));
+                      builder: (context) => const MainScreen()));
             },
             child: const Text("Aceptar"))
       ],

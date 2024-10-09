@@ -1,9 +1,12 @@
 import 'package:entregafinal/screens/home.dart';
-import 'package:entregafinal/screens/packageList.dart';
+import 'package:entregafinal/screens/package_list.dart';
+import 'package:entregafinal/screens/profile.dart';
 import 'package:entregafinal/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -12,7 +15,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentScreen = 0;
   final titles = ['Inicio', 'Paquetes', 'Configuración'];
-  final screens = [const HomeScreen(), const PackageListScreen(), SettingsScreen()];
+  final screens = [const HomeScreen(), const PackageListScreen(), const SettingsScreen()];
 
   // Methods
   @override
@@ -27,12 +30,14 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: IconButton(
-              onPressed: null, 
-              icon: Icon(Icons.account_circle, color: Colors.blue,)),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
+              }, 
+              icon: const Icon(Icons.account_circle, color: Colors.blue,)),
           )
         ]
       ),
@@ -41,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
         selectedIndex: currentScreen,
         onDestinationSelected: (index) {
           setState(() {
-            this.currentScreen = index;
+            currentScreen = index;
           });
         },
         destinations: const [
