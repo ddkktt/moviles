@@ -1,6 +1,6 @@
 import 'package:entregafinal/screens/home.dart';
 import 'package:entregafinal/screens/packageList.dart';
-import 'package:entregafinal/screens/settings.dart';
+import 'package:entregafinal/screens/profile.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -11,8 +11,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentScreen = 0;
-  final titles = ['Inicio', 'Paquetes', 'Configuración'];
-  final screens = [const HomeScreen(), const PackageListScreen(), SettingsScreen()];
+  final titles = ['Inicio', 'Paquetes', 'Perfil'];
+  final screens = [const HomeScreen(), const PackageListScreen(), ProfileScreen()];
 
   // Methods
   @override
@@ -46,8 +46,8 @@ class _MainScreenState extends State<MainScreen> {
         },
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'Inicio'
+            icon: Icon(Icons.camera),
+            label: 'Scan'
           ),
           NavigationDestination(
             icon: Badge(
@@ -57,8 +57,8 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Paquetes'
           ),
           NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Config'
+            icon: Icon(Icons.account_circle),
+            label: 'Perfil'
           ),
         ],
       ),
