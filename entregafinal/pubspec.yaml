@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   provider: 
   google_fonts: ^6.2.1
+  map_launcher:
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,10 @@
+import 'package:entregafinal/data/data_provider.dart';
 import 'package:entregafinal/screens/home.dart';
-import 'package:entregafinal/screens/package_list.dart';
+import 'package:entregafinal/screens/packageList.dart';
 import 'package:entregafinal/screens/profile.dart';
 import 'package:entregafinal/screens/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -49,19 +51,19 @@ class _MainScreenState extends State<MainScreen> {
             currentScreen = index;
           });
         },
-        destinations: const [
-          NavigationDestination(
+        destinations:[
+          const NavigationDestination(
             icon: Icon(Icons.home),
             label: 'Inicio'
           ),
           NavigationDestination(
             icon: Badge(
-              label: Text('11'),
-              child: Icon(Icons.apps),
+              label: Text("${Provider.of<DataProvider>(context).getPendingDeliveriesCount()}"),
+              child: const Icon(Icons.apps),
             ),
             label: 'Paquetes'
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(Icons.settings),
             label: 'Config'
           ),
