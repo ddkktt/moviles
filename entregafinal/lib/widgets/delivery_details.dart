@@ -74,11 +74,11 @@ class DeliveryDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildDetailRow(Icons.info_outline, 'Status del paquete:', 'En tránsito'),
+          _buildDetailRow(Icons.info_outline, 'Status del paquete:', delivery.status),
           const SizedBox(height: 12),
-          _buildDetailRow(Icons.location_on_outlined, 'Destino final:', 'Calle Principal 123'),
+          _buildDetailRow(Icons.location_on_outlined, 'Destino final:', delivery.recipient.address?.formattedAddress),
           const SizedBox(height: 12),
-          _buildDetailRow(Icons.person_outline, 'A quien entregar:', 'Juan Pérez'),
+          _buildDetailRow(Icons.person_outline, 'A quien entregar:', delivery.recipient.name),
         ],
       ),
     );
