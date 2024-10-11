@@ -1,46 +1,54 @@
+import 'package:entregafinal/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-
+  
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildProfileHeader(),
-            const SizedBox(height: 24),
-            _buildEditProfileButton(),
-            const SizedBox(height: 24),
-            _buildPersonalInfo(),
-          ],
-        ),
-      ),
-    );
+  Widget build(BuildContext context) {  
+    return Scaffold(
+        appBar: AppBar(title: const Text("Perfil")),
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildProfileHeader(),
+                const SizedBox(height: 24),
+                _buildEditProfileButton(),
+                const SizedBox(height: 24),
+                _buildPersonalInfo(),
+              ],
+            ),
+          ),
+      );
   }
 
   Widget _buildProfileHeader() {
-    return const Center(
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage(''),
+  
+    return Builder(
+      builder: (context) {
+        return Center(
+          child: Column(
+            children: [
+              const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage(''),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Nombre Usuario',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'usuario@email.com',
+                style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.secondary),
+              ),
+            ],
           ),
-          SizedBox(height: 16),
-          Text(
-            'Nombre Usuario',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            'usuario@email.com',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
-        ],
-      ),
+        );
+      }
     );
   }
 

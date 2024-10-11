@@ -5,28 +5,30 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 200,
-        height: 200,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.blue,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: const Center(
-          child: Text(
-            'QR Scanner',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          getCurrentDate(),
+          style: TextStyle(
+            fontSize: 40,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 6
+              ..color = Theme.of(context).colorScheme.primary,
           ),
         ),
-      ),
+      ]
     );
   }
+}
+
+getCurrentDate() {
+  var date = DateTime.now().toString();
+
+  var dateParse = DateTime.parse(date);
+
+  var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
+
+  return formattedDate;
 }
