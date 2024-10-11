@@ -1,47 +1,85 @@
 import 'package:flutter/material.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    // covered in material app for style purposes
-    return 
-    Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        title: Text(
-          "Perfil",
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildProfileHeader(),
+            const SizedBox(height: 24),
+            _buildEditProfileButton(),
+            const SizedBox(height: 24),
+            _buildPersonalInfo(),
+          ],
         ),
       ),
-      body: Column(     
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    );
+  }
+
+  Widget _buildProfileHeader() {
+    return const Center(
+      child: Column(
         children: [
-          IconButton(
-            iconSize: 180.0,
-            onPressed: () {
-              Alert(
-                      context: context,
-                      desc:
-                          "Aqui se va a permitir cambiar la foto del usuario")
-                  .show();
-            },
-            icon: const Icon(Icons.account_circle)
+          CircleAvatar(
+            radius: 50,
+            backgroundImage: AssetImage(''),
           ),
-          const Center(
-            child: Text(
-              "Ulises Tejeda Chávez ",
-              style: TextStyle(
-                fontSize: 40,
-              
-              ),
-            ),
-          )
+          SizedBox(height: 16),
+          Text(
+            'Nombre Usuario',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            'usuario@email.com',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEditProfileButton() {
+    return ElevatedButton(
+      child: const Text('Editar Perfil'),
+      onPressed: () {
+        // TODO: Implement edit profile action
+      },
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(double.infinity, 50),
+      ),
+    );
+  }
+
+  Widget _buildPersonalInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Información Personal',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 16),
+        _buildInfoItem('Teléfono', '+1234567890'),
+        _buildInfoItem('Dirección', 'Calle Principal 123'),
+        _buildInfoItem('Ciudad', 'Ciudad Ejemplo'),
+      ],
+    );
+  }
+
+  Widget _buildInfoItem(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Text(
+            '$label: ',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(value),
         ],
       ),
     );

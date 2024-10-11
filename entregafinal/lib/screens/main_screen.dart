@@ -2,6 +2,7 @@ import 'package:entregafinal/data/data_provider.dart';
 import 'package:entregafinal/screens/home.dart';
 import 'package:entregafinal/screens/packageList.dart';
 import 'package:entregafinal/screens/profile.dart';
+import 'package:entregafinal/screens/scanner.dart';
 import 'package:entregafinal/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +17,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentScreen = 0;
-  final titles = ['Inicio', 'Paquetes', 'Configuración'];
-  final screens = [const HomeScreen(), const PackageListScreen(), const SettingsScreen()];
+  final titles = ['Inicio', 'Paquetes', 'Configuración', 'Escanear'];
+  final screens = [const HomeScreen(), const PackageListScreen(), const SettingsScreen(), const ScannerScreen()];
 
   // Methods
   @override
@@ -37,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
               }, 
               icon: const Icon(Icons.account_circle, color: Colors.blue,)),
           )
@@ -54,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
         destinations:[
           const NavigationDestination(
             icon: Icon(Icons.home),
-            label: 'Inicio'
+            label: 'Inicio',
           ),
           NavigationDestination(
             icon: Badge(
@@ -66,6 +67,11 @@ class _MainScreenState extends State<MainScreen> {
           const NavigationDestination(
             icon: Icon(Icons.settings),
             label: 'Config'
+
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.camera),
+            label: 'Scan'
           ),
         ],
       ),
