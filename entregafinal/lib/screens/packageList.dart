@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'packageData.dart';
 
 class PackageListScreen extends StatefulWidget {
-  const PackageListScreen({Key? key}) : super(key: key);
+  const PackageListScreen({super.key});
 
   @override
   State<PackageListScreen> createState() => _PackageListScreenState();

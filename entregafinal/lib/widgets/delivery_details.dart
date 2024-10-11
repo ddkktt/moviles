@@ -5,7 +5,7 @@ import 'package:map_launcher/map_launcher.dart';
 class DeliveryDetails extends StatelessWidget {
   final delivery;
 
-  DeliveryDetails({required this.delivery});
+  const DeliveryDetails({super.key, required this.delivery});
 
   goToMap() async {
     final availableMaps = await MapLauncher.installedMaps;

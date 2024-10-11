@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -44,13 +46,13 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildEditProfileButton() {
     return ElevatedButton(
-      child: const Text('Editar Perfil'),
       onPressed: () {
         // TODO: Implement edit profile action
       },
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(double.infinity, 50),
       ),
+      child: const Text('Editar Perfil'),
     );
   }
 
