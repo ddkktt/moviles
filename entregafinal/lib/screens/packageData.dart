@@ -12,12 +12,12 @@ class PackageDataScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalles del paquete'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.close),
+        //     onPressed: () => Navigator.pop(context),
+        //   ),
+        // ],
       ),
       body: DeliveryDetails(delivery: delivery),
     );

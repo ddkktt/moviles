@@ -25,20 +25,33 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            titles[currentScreen], 
-            style: const TextStyle(
-              fontWeight: FontWeight.bold
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              titles[currentScreen], 
+              style: const TextStyle(
+                fontWeight: FontWeight.bold
+              ),
             ),
-          ),
+          ],
         ),
+        // title: Center(
+        //   child: Text(
+        //     titles[currentScreen], 
+        //     style: const TextStyle(
+        //       fontWeight: FontWeight.bold
+        //     ),
+        //   ),
+        // ),
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
               }, 
               icon: const Icon(Icons.account_circle, color: Colors.blue,)),
           )

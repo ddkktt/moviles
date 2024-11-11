@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "527759396838",
+    "project_id": "driverapp-e5284",
+    "storage_bucket": "driverapp-e5284.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527759396838:android:85ec7cb9f69c4bbb85d027",
+        "android_client_info": {
+          "package_name": "com.driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKNRgmxH0VkfGy-MS00qpKs5YnRt6_9Vw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527759396838:android:7da06c70a30cfe2085d027",
+        "android_client_info": {
+          "package_name": "com.example.entregafinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKNRgmxH0VkfGy-MS00qpKs5YnRt6_9Vw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

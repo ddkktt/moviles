@@ -14,12 +14,57 @@ class DeliveryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      color: Theme.of(context).colorScheme.primary,
       child: ListTile(
-        title: Text('Número de Rastreo: ${delivery.trackingNumber}'),
+        title: Center(
+          child: Text(
+            delivery.recipient.name,
+            style: TextStyle(
+              fontSize: 25,
+              color: Theme.of(context).colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
         subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Cliente: ${delivery.recipient.name}'),
-            Text('Dirección: ${delivery.recipient.address?.formattedAddress}'),
+            RichText(
+              text: 
+              TextSpan(
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,       
+                  fontSize: 20,
+                ),
+                children: [
+                  const TextSpan(
+                    text: 'Tracking Number: ',
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                  TextSpan(
+                    text: delivery.trackingNumber,
+                  ),
+                ]
+              ),
+            ),
+            RichText(
+              text: 
+              TextSpan(
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 20,
+                ),
+                children: [
+                  const TextSpan(
+                    text: 'Dirección: ',
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                  TextSpan(
+                    text: delivery.recipient.address?.formattedAddress,
+                  ),
+                ]
+              ),
+            ),
           ]
         ),
         onTap: () {

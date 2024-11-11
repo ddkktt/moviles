@@ -27,6 +27,15 @@ class DeliveryDetails extends StatelessWidget {
     );
   }
 
+  // Widget _buildMiniMap(Shipment delivery) {
+  //   GoogleMap(
+  //   liteModeEnabled: true,     // the required field
+  //   mapToolbarEnabled: false,  // to disable buttons
+  //   onTap: (latLng) =>         // onTap handler
+  //       goToMap, 
+  //   );
+  // }
+
   Widget _buildMap(Shipment delivery) {
     return ElevatedButton(
       onPressed: goToMap,

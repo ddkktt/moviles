@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   rflutter_alert: ^2.0.7
 
 
@@ -40,6 +41,9 @@ dependencies:
   google_fonts: ^6.2.1
   map_launcher:
   flutter_svg:
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.1
+  firebase_ui_auth: ^1.16.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +67,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/images/photo_1.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -1,9 +1,7 @@
 import 'package:entregafinal/data/data_provider.dart';
-import 'package:entregafinal/models/shipment.dart';
 import 'package:entregafinal/widgets/delivery_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'packageData.dart';
 
 class PackageListScreen extends StatefulWidget {
   const PackageListScreen({super.key});

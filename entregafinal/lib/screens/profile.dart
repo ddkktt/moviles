@@ -1,6 +1,6 @@
-import 'package:entregafinal/themes/theme_provider.dart';
+import 'package:entregafinal/auth/auth_gate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,6 +19,13 @@ class ProfileScreen extends StatelessWidget {
                 _buildEditProfileButton(),
                 const SizedBox(height: 24),
                 _buildPersonalInfo(),
+                ElevatedButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const AuthGate()),(route) => false); 
+                  },
+                  child: const Text("Sign Out"),
+                ),
               ],
             ),
           ),
