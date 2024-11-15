@@ -55,7 +55,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
             Expanded(
               child: GestureDetector(
                 onTap: _scanQRCode, // Inicia el escaneo cuando se toque el contenedor
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Scan QR Code',
                     style: TextStyle(
@@ -67,10 +67,10 @@ class _ScannerScreenState extends State<ScannerScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Scan Result: $_scanResult',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
         ),

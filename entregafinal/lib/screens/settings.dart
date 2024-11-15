@@ -40,6 +40,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
 void _getToken() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  print("Token conseguido y copiado al portapapeles: ${fcmToken}");
+  print("Token conseguido y copiado al portapapeles: $fcmToken");
   await Clipboard.setData(ClipboardData(text: "$fcmToken"));
 }

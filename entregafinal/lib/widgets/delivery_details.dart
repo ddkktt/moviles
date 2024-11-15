@@ -1,5 +1,6 @@
 import 'package:entregafinal/models/shipment.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 class DeliveryDetails extends StatelessWidget {
@@ -10,54 +11,70 @@ class DeliveryDetails extends StatelessWidget {
   goToMap() async {
     final availableMaps = await MapLauncher.installedMaps;
     await availableMaps.first.showMarker(
-            coords: Coords(delivery.recipient.address!.lat!, delivery.recipient.address!.lng!),
-            title: delivery.recipient.name,
-          );
+      coords: Coords(delivery.recipient.address!.lat!, delivery.recipient.address!.lng!),
+      title: delivery.recipient.name,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: [
-          _buildMap(delivery),
-          _buildPackageDetails(),
-          const Spacer(),
-          _buildDeliveredButton(context),
-        ],
+      children: [
+        _buildMap(delivery),
+        _buildPackageDetails(),
+        const Spacer(),
+        _buildDeliveredButton(context),
+      ],
     );
   }
 
-  // Widget _buildMiniMap(Shipment delivery) {
-  //   GoogleMap(
-  //   liteModeEnabled: true,     // the required field
-  //   mapToolbarEnabled: false,  // to disable buttons
-  //   onTap: (latLng) =>         // onTap handler
-  //       goToMap, 
-  //   );
-  // }
-
   Widget _buildMap(Shipment delivery) {
-    return ElevatedButton(
-      onPressed: goToMap,
-      child: Container(
-        height: 200,
-        margin: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
+    return Container(
+      height: 200,
+      margin: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: GestureDetector(
+          onTap: goToMap,
+          child: GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                delivery.recipient.address!.lat!,
+                delivery.recipient.address!.lng!,
+              ),
+              zoom: 15,
             ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: const Center(
-            child: Text('Mini mapa', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            markers: {
+              Marker(
+                markerId: const MarkerId('destination'),
+                position: LatLng(
+                  delivery.recipient.address!.lat!,
+                  delivery.recipient.address!.lng!,
+                ),
+                infoWindow: InfoWindow(title: delivery.recipient.name),
+              ),
+            },
+            liteModeEnabled: true,
+            mapToolbarEnabled: false,
+            zoomControlsEnabled: false,
+            rotateGesturesEnabled: false,
+            scrollGesturesEnabled: false,
+            tiltGesturesEnabled: false,
+            zoomGesturesEnabled: false,
+            myLocationEnabled: false,
+            myLocationButtonEnabled: false,
           ),
         ),
       ),
