@@ -1,24 +1,24 @@
 const dummyUsers = [
   {
-    "id": "0",
+    "id": 0,
     "name": "Admi Nistrator",
     "email": "admin@this.company.com",
     "role": "admin",
   },
   {
-    "id": "1",
+    "id": 1,
     "name": "Chofi Lopez",
     "email": "admin@this.company.com",
     "role": "driver",
   },
   {
-    "id": "100",
+    "id": 100,
     "name": "Amazon",
     "email": "our.contact@amazon.com",
     "role": "provider",
   },
   {
-    "id": "1000",
+    "id": 1000,
     "name": "Emily Johnson",
     "email": "emily.johnson@x.dummyjson.com",
     "role": "customer",
@@ -29,11 +29,11 @@ const dummyUsers = [
       "zipCode": "45202",
       "country": "United States",
       "lat": 39.10372864744755, 
-	  "lng": -84.50986257300929,
+	    "lng": -84.50986257300929,
     },
   },
   {
-    "id": "1001",
+    "id": 1001,
     "name": "Michael Williams",
     "email": "michael.williams@x.dummyjson.com",
     "role": "customer",
@@ -51,7 +51,7 @@ const dummyUsers = [
 
 List<Map<String, Object>> dummyShipments = [
   {
-    "trackingNumber": "1000000001",
+    "trackingNumber": 1000000001,
     "sender": dummyUsers[2],
     "recipient": dummyUsers[3],
     "driver": dummyUsers[1],
@@ -59,7 +59,7 @@ List<Map<String, Object>> dummyShipments = [
     "status": "En Reparto",
   },
   {
-    "trackingNumber": "1000000001",
+    "trackingNumber": 1000000001,
     "sender": dummyUsers[2],
     "recipient": dummyUsers[3],
     "driver": dummyUsers[1],
@@ -67,7 +67,7 @@ List<Map<String, Object>> dummyShipments = [
     "status": "En Reparto",
   },
   {
-    "trackingNumber": "1000000002",
+    "trackingNumber": 1000000002,
     "sender": dummyUsers[2],
     "recipient": dummyUsers[3],
     "driver": dummyUsers[1],
@@ -75,7 +75,7 @@ List<Map<String, Object>> dummyShipments = [
     "status": "En Reparto",
   },
   {
-    "trackingNumber": "1000000003",
+    "trackingNumber": 1000000003,
     "sender": dummyUsers[2],
     "recipient": dummyUsers[4],
     "driver": dummyUsers[1],
@@ -83,7 +83,7 @@ List<Map<String, Object>> dummyShipments = [
     "status": "En Reparto",
   },
   {
-    "trackingNumber": "1000000004",
+    "trackingNumber": 1000000004,
     "sender": dummyUsers[2],
     "recipient": dummyUsers[4],
     "driver": dummyUsers[1],

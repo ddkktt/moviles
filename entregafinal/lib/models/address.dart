@@ -32,6 +32,20 @@ class Address {
     );
   }
 
+  
+
+  factory Address.fromDB(Map json) {
+    return Address(
+      street: json['street'] as String,
+      city: json['city'] as String,
+      state: json['state'] as String,
+      zipCode: json['zipCode'] as String,
+      country: json['country'] as String,
+      lat: json['lat'] as double?,
+      lng: json['lng'] as double?,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'street': street,

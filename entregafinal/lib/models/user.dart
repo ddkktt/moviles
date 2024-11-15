@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entregafinal/models/address.dart';
 
 class User {
-  String id;
+  int id;
   String name;
   String email;
   String role; // 'admin', 'customer', 'provider', 'driver'
@@ -21,13 +22,28 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'] as String,
+      id: json['id'],
       name: json['name'] as String,
       email: json['email'] as String,
       role:  json['role'] as String,
       phoneNumber: json['phoneNumber'] as String?,
       address: json['address'] != null
           ? Address.fromJson(json['address'] as Map<String, dynamic>)
+          : null,
+    );
+  }
+
+  factory User.fromDB(Map<String, dynamic> json) {
+    final addrs = FirebaseFirestore.instance.collection('/Address');
+
+    return User(
+      id: json['id'],
+      name: json['name'] as String,
+      email: json['email'] as String,
+      role:  json['role'] as String,
+      phoneNumber: json['phoneNumber'] as String?,
+      address: json['address'] != null
+          ? Address.fromDB(json['address'].data)
           : null,
     );
   }

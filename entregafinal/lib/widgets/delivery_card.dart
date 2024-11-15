@@ -42,7 +42,7 @@ class DeliveryCard extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)
                   ),
                   TextSpan(
-                    text: delivery.trackingNumber,
+                    text: delivery.trackingNumber.toString(),
                   ),
                 ]
               ),
