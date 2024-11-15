@@ -1,6 +1,6 @@
 import 'package:entregafinal/data/data_provider.dart';
 import 'package:entregafinal/screens/home.dart';
-import 'package:entregafinal/screens/packageList.dart';
+import 'package:entregafinal/screens/package_list.dart';
 import 'package:entregafinal/screens/profile.dart';
 import 'package:entregafinal/screens/scanner.dart';
 import 'package:entregafinal/screens/settings.dart';
