@@ -18,18 +18,18 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => ThemeProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => DataProvider(),
-        )
-      ],
-      child: const MyApp(),
-    )
-  );
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => ThemeProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => DataProvider(),
+          )
+        ],
+        child: const MyApp(),
+      )
+    );
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

@@ -9,7 +9,7 @@ class PackageListScreen extends StatefulWidget {
 }
 
 class _PackageListScreenState extends State<PackageListScreen> {
-  List<Shipment>? _shipments = null;
+  List<Shipment>? _shipments;
 
   _PackageListScreenState() {
     getShipments().then((shipments) {

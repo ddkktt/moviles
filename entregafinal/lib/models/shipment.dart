@@ -70,14 +70,14 @@ Future<List<Shipment>> getShipments() async {
   final users = await FirebaseFirestore.instance.collection('/Users').get();
   final addrs = await FirebaseFirestore.instance.collection('/Address').get();
   List<Shipment> list = [];
-  shipments.docs.forEach( (doc) {
+  for (var doc in shipments.docs) {
     var jdoc = doc.data();
     jdoc['sender'] = users.docs.firstWhere((doc)=>doc.id==jdoc['sender'].id).data();
     jdoc['driver'] = users.docs.firstWhere((doc)=>doc.id==jdoc['driver'].id).data();
     jdoc['recipient'] = users.docs.firstWhere((doc)=>doc.id==jdoc['recipient'].id).data();
     jdoc['recipient']['address'] = addrs.docs.firstWhere((doc)=>doc.id==jdoc['recipient']['address'].id).data();
     list.add(Shipment.fromJson(jdoc));
-  });
+  }
   return list;
  
 }
