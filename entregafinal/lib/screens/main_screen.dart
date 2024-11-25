@@ -1,13 +1,16 @@
-import 'package:entregafinal/data/data_provider.dart';
+import 'package:entregafinal/auth/auth_provider.dart';
+import 'package:entregafinal/screens/admin_packages_list.dart';
 import 'package:entregafinal/screens/home.dart';
 import 'package:entregafinal/screens/package_list.dart';
 import 'package:entregafinal/screens/profile.dart';
 import 'package:entregafinal/screens/scanner.dart';
 import 'package:entregafinal/screens/settings.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
+
   const MainScreen({super.key});
 
 
@@ -17,12 +20,15 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentScreen = 0;
-  final titles = ['Inicio', 'Paquetes', 'Configuración', 'Escanear'];
-  final screens = [const HomeScreen(), const PackageListScreen(), const SettingsScreen(), const ScannerScreen()];
-
+  final titles = ['Inicio', 'Paquetes', 'Configuración', 'Escanear', 'Modo Dios'];
+  final screens = [const HomeScreen(), const PackageListScreen(), const SettingsScreen(), const ScannerScreen(), const AdminPackagesListScreen()];
+  
   // Methods
   @override
   Widget build(BuildContext context) {
+    String? email = FirebaseAuth.instance.currentUser?.email;
+    final bool isAdmin = Provider.of<RolesProvider>(context).isAdmin(email);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -70,10 +76,10 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.home),
             label: 'Inicio',
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Badge(
-              label: Text("${Provider.of<DataProvider>(context).getPendingDeliveriesCount()}"),
-              child: const Icon(Icons.apps),
+              label: Text("1"),//TODO
+              child: Icon(Icons.apps),
             ),
             label: 'Paquetes'
           ),
@@ -86,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.camera),
             label: 'Scan'
           ),
-        ],
+        ] + (isAdmin? [const NavigationDestination(icon: Icon(Icons.admin_panel_settings), label: "admin")] : [])
       ),
     );
   }

@@ -1,0 +1,1 @@
+export 'shipment_entity.dart';

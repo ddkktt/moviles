@@ -1,6 +1,8 @@
-import 'package:entregafinal/models/shipment.dart';
+import 'package:entregafinal/bloc/shipments_bloc.dart';
 import 'package:entregafinal/widgets/delivery_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 class PackageListScreen extends StatefulWidget {
   const PackageListScreen({super.key});
 
@@ -9,76 +11,37 @@ class PackageListScreen extends StatefulWidget {
 }
 
 class _PackageListScreenState extends State<PackageListScreen> {
-  List<Shipment>? _shipments;
-
-  _PackageListScreenState() {
-    getShipments().then((shipments) {
-      setState(() {
-        //debugPrint(shipments == null ? "zero" : "uno");
-        _shipments = shipments;
-      });
-    });
+  Future<void> _onRefresh() async {
+    // Using the correct LoadShipmentsCounter event
+    context.read<ShipmentsBloc>().add(LoadShipmentsCounter());
+    // Wait briefly for the refresh to complete
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   @override
   Widget build(BuildContext context) {
-    //final shipments = Provider.of<DataProvider>(context).getTodaysShipmentsForMe();
-    if (_shipments == null) {
-      return const Center(
-        child: SizedBox(
-          width: 60,
-          height: 60,
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-    return ListView.builder(
-      itemCount: _shipments?.length,
-      itemBuilder: (context, index) => DeliveryCard(delivery: _shipments![index])
+    return BlocBuilder<ShipmentsBloc, ShipmentsState>(
+      builder: (context, state) {
+        if (state is ShipmentsInitial) {
+          return const Center(
+            child: CircularProgressIndicator()
+          );
+        } else if (state is ShipmentsLoaded) {
+          return RefreshIndicator(
+            onRefresh: _onRefresh,
+            child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: state.shipments.length,
+              itemBuilder: (BuildContext context, int index) {     
+                return DeliveryCard(delivery: state.shipments[index]);
+              },
+            ),
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator()
+        );
+      }
     );
-    
-    // return FutureBuilder(
-    //   future: _shipments,
-    //   builder: (BuildContext context, AsyncSnapshot<List<Shipment>?> snapshot) {
-    //     ListView children;
-    //     if (snapshot.hasData) {
-    //       List<Shipment> singleShipment = snapshot.data as List<Shipment>;
-    //       children = ListView.builder(
-    //         itemCount: singleShipment.length,
-    //         itemBuilder: (BuildContext context, int index) {     
-    //           return DeliveryCard(delivery: singleShipment[index]);
-    //         },
-    //       );
-    //     } else if (snapshot.hasError) {
-    //       children = ListView.builder(
-    //         itemCount: 1,
-    //         itemBuilder: (BuildContext context, int index) {
-    //           return const Icon(
-    //             Icons.error_outline,
-    //             color: Colors.red,
-    //             size: 60,
-    //           );
-    //         }
-    //       );
-    //     } else {
-    //       children = ListView.builder(
-    //         itemCount: 1,
-    //         itemBuilder: (BuildContext context, int index) {
-    //           return const SizedBox(
-    //             width: 60,
-    //             height: 60,
-    //             child: CircularProgressIndicator(),
-    //           );
-    //         }
-    //       );
-    //     }
-    //     return Center(
-    //       child: Column(
-    //         mainAxisAlignment: MainAxisAlignment.center,
-    //         children: [children],
-    //       ),
-    //     );
-    //   }
-    // );
   }
 }
