@@ -1,6 +1,6 @@
 import 'package:shipments_repository/src/models/shipment.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as google_maps;
 import 'package:map_launcher/map_launcher.dart';
 
 class DeliveryDetails extends StatelessWidget {
@@ -10,9 +10,16 @@ class DeliveryDetails extends StatelessWidget {
 
   goToMap() async {
     final availableMaps = await MapLauncher.installedMaps;
-    await availableMaps.first.showMarker(
-      coords: Coords(delivery.loc[0], delivery.loc[1]),
-      title: delivery.recipient,
+    // Filter to get Google Maps specifically
+    final googleMaps = availableMaps.firstWhere(
+      (map) => map.mapType == MapType.google,
+      orElse: () => availableMaps.first, // Fallback to first available map if Google Maps isn't installed
+    );
+
+    await googleMaps.showDirections(
+      destination: Coords(delivery.loc[0], delivery.loc[1]),
+      destinationTitle: delivery.recipient,
+      directionsMode: DirectionsMode.driving,
     );
   }
 
@@ -23,7 +30,7 @@ class DeliveryDetails extends StatelessWidget {
         _buildMap(delivery),
         _buildPackageDetails(),
         const Spacer(),
-        _buildDeliveredButton(context),
+        _buildNavigateButton(context),
       ],
     );
   }
@@ -48,22 +55,22 @@ class DeliveryDetails extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         child: GestureDetector(
           onTap: goToMap,
-          child: GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: LatLng(
+          child: google_maps.GoogleMap(
+            initialCameraPosition: google_maps.CameraPosition(
+              target: google_maps.LatLng(
                 delivery.loc[0],
                 delivery.loc[1],
               ),
               zoom: 15,
             ),
             markers: {
-              Marker(
-                markerId: const MarkerId('destination'),
-                position: LatLng(
+              google_maps.Marker(
+                markerId: const google_maps.MarkerId('destination'),
+                position: google_maps.LatLng(
                   delivery.loc[0],
                   delivery.loc[1],
                 ),
-                infoWindow: InfoWindow(title: delivery.recipient),
+                infoWindow: google_maps.InfoWindow(title: delivery.recipient),
               ),
             },
             liteModeEnabled: true,
@@ -130,16 +137,11 @@ class DeliveryDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildDeliveredButton(BuildContext context) {
+  Widget _buildNavigateButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ElevatedButton(
-        onPressed: () {
-          // TODO: Implement delivery confirmation logic
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Paquete marcado como entregado')),
-          );
-        },
+        onPressed: goToMap,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,
@@ -149,9 +151,9 @@ class DeliveryDetails extends StatelessWidget {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.check_circle_outline),
+            Icon(Icons.map_outlined),
             SizedBox(width: 8),
-            Text('Entregado', style: TextStyle(fontSize: 18)),
+            Text('Iniciar Entrega', style: TextStyle(fontSize: 18)),
           ],
         ),
       ),
