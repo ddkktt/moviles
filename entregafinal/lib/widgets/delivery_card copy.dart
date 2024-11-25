@@ -1,4 +1,4 @@
-import 'package:entregafinal/models/shipment.dart';
+import 'package:shipments_repository/src/models/shipment.dart';
 import 'package:entregafinal/screens/packageData.dart';
 import 'package:flutter/material.dart';
 

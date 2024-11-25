@@ -1,10 +1,12 @@
 import 'package:entregafinal/auth/auth_gate.dart';
-import 'package:entregafinal/data/data_provider.dart';
+import 'package:entregafinal/auth/auth_provider.dart';
+import 'package:entregafinal/bloc/shipments_bloc.dart';
 import 'package:entregafinal/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:entregafinal/themes/theme_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 
@@ -24,8 +26,8 @@ void main() async {
             create: (context) => ThemeProvider(),
           ),
           ChangeNotifierProvider(
-            create: (context) => DataProvider(),
-          )
+            create: (context) => RolesProvider(),
+          ),
         ],
         child: const MyApp(),
       )
@@ -42,14 +44,24 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
+  
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+  Widget build(BuildContext context) {  
+    debugPrint("here");
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ShipmentsBloc()..add(LoadShipmentsCounter()),
+        )
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const AuthGate(),
       ),
-      home: const AuthGate(),
     );
   }
 }

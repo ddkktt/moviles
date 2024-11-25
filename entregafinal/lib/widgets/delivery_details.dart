@@ -1,18 +1,18 @@
-import 'package:entregafinal/models/shipment.dart';
+import 'package:shipments_repository/src/models/shipment.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 class DeliveryDetails extends StatelessWidget {
-  final delivery;
+  final Shipment delivery;
 
   const DeliveryDetails({super.key, required this.delivery});
 
   goToMap() async {
     final availableMaps = await MapLauncher.installedMaps;
     await availableMaps.first.showMarker(
-      coords: Coords(delivery.recipient.address!.lat!, delivery.recipient.address!.lng!),
-      title: delivery.recipient.name,
+      coords: Coords(delivery.loc[0], delivery.loc[1]),
+      title: delivery.recipient,
     );
   }
 
@@ -51,8 +51,8 @@ class DeliveryDetails extends StatelessWidget {
           child: GoogleMap(
             initialCameraPosition: CameraPosition(
               target: LatLng(
-                delivery.recipient.address!.lat!,
-                delivery.recipient.address!.lng!,
+                delivery.loc[0],
+                delivery.loc[1],
               ),
               zoom: 15,
             ),
@@ -60,10 +60,10 @@ class DeliveryDetails extends StatelessWidget {
               Marker(
                 markerId: const MarkerId('destination'),
                 position: LatLng(
-                  delivery.recipient.address!.lat!,
-                  delivery.recipient.address!.lng!,
+                  delivery.loc[0],
+                  delivery.loc[1],
                 ),
-                infoWindow: InfoWindow(title: delivery.recipient.name),
+                infoWindow: InfoWindow(title: delivery.recipient),
               ),
             },
             liteModeEnabled: true,
@@ -102,9 +102,9 @@ class DeliveryDetails extends StatelessWidget {
         children: [
           _buildDetailRow(Icons.info_outline, 'Status del paquete:', delivery.status),
           const SizedBox(height: 12),
-          _buildDetailRow(Icons.location_on_outlined, 'Destino final:', delivery.recipient.address?.formattedAddress),
+          _buildDetailRow(Icons.location_on_outlined, 'Destino final:', delivery.address),
           const SizedBox(height: 12),
-          _buildDetailRow(Icons.person_outline, 'A quien entregar:', delivery.recipient.name),
+          _buildDetailRow(Icons.person_outline, 'A quien entregar:', delivery.recipient),
         ],
       ),
     );

@@ -1,6 +1,7 @@
-import 'package:entregafinal/models/shipment.dart';
+import 'package:entregafinal/bloc/shipments_bloc.dart';
 import 'package:entregafinal/widgets/delivery_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 class PackageListScreen extends StatefulWidget {
   const PackageListScreen({super.key});
 
@@ -9,33 +10,49 @@ class PackageListScreen extends StatefulWidget {
 }
 
 class _PackageListScreenState extends State<PackageListScreen> {
-  List<Shipment>? _shipments;
+  // List<Shipment>? _shipments;
 
-  _PackageListScreenState() {
-    getShipments().then((shipments) {
-      setState(() {
-        //debugPrint(shipments == null ? "zero" : "uno");
-        _shipments = shipments;
-      });
-    });
-  }
+  // _PackageListScreenState() {
+  //   getShipments().then((shipments) {
+  //     setState(() {
+  //       //debugPrint(shipments == null ? "zero" : "uno");
+  //       _shipments = shipments;
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    //final shipments = Provider.of<DataProvider>(context).getTodaysShipmentsForMe();
-    if (_shipments == null) {
-      return const Center(
-        child: SizedBox(
-          width: 60,
-          height: 60,
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-    return ListView.builder(
-      itemCount: _shipments?.length,
-      itemBuilder: (context, index) => DeliveryCard(delivery: _shipments![index])
+    return BlocBuilder<ShipmentsBloc, ShipmentsState>(
+      builder: (context, state) {
+        if (state is ShipmentsInitial) {
+          return const CircularProgressIndicator();
+        } else
+        if (state is ShipmentsLoaded) {
+          return ListView.builder(
+            itemCount: state.shipments.length,
+            itemBuilder: (BuildContext context, int index) {     
+              return DeliveryCard(delivery: state.shipments[index]);
+            },
+          );
+        }
+        return const CircularProgressIndicator();
+      }
     );
+    //final shipments = Provider.of<DataProvider>(context).getTodaysShipmentsForMe();
+    // if (_shipments == null) {
+    //   return const Center(
+    //     child: SizedBox(
+    //       width: 60,
+    //       height: 60,
+    //       child: ,
+    //     ),
+    //   );
+    // }
+    // return ListView.builder(
+    //   itemCount: _shipments?.length,
+    //   itemBuilder: (context, index) => DeliveryCard(delivery: _shipments![index])
+    // );
     
     // return FutureBuilder(
     //   future: _shipments,

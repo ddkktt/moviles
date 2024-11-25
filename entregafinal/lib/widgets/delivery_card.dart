@@ -1,6 +1,6 @@
-import 'package:entregafinal/models/shipment.dart';
 import 'package:entregafinal/screens/packageData.dart';
 import 'package:flutter/material.dart';
+import 'package:shipments_repository/src/models/shipment.dart';
 
 class DeliveryCard extends StatelessWidget {
   final Shipment delivery;
@@ -18,7 +18,7 @@ class DeliveryCard extends StatelessWidget {
       child: ListTile(
         title: Center(
           child: Text(
-            delivery.recipient.name,
+            delivery.recipient,
             style: TextStyle(
               fontSize: 25,
               color: Theme.of(context).colorScheme.onPrimary,
@@ -60,7 +60,7 @@ class DeliveryCard extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)
                   ),
                   TextSpan(
-                    text: delivery.recipient.address?.formattedAddress,
+                    text: delivery.recipient//to do .address?.formattedAddress,
                   ),
                 ]
               ),

@@ -1,6 +1,4 @@
-import 'package:entregafinal/data/data_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -31,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Tienes ${Provider.of<DataProvider>(context).getPendingDeliveriesCount()} paquetes hoy",
+                  "Tienes 11 paquetes hoy",
                   style: TextStyle(
                     fontSize: 20,
                     foreground: Paint()
