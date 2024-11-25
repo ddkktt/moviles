@@ -9,8 +9,6 @@ import 'package:entregafinal/themes/theme_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -20,18 +18,18 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => ThemeProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => RolesProvider(),
-          ),
-        ],
-        child: const MyApp(),
-      )
-    );
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RolesProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -41,14 +39,15 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("ID del mensaje: ${message.messageId}");
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
-  
+
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
+    // Obtiene el tema actual del ThemeProvider
+    final themeProvider = Provider.of<ThemeProvider>(context);
     debugPrint("here");
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -57,9 +56,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: themeProvider.themeData, // Usa el tema dinámico
         home: const AuthGate(),
       ),
     );

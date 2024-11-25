@@ -59,7 +59,7 @@ class _MainScreenState extends State<MainScreen> {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
               }, 
-              icon: const Icon(Icons.account_circle, color: Colors.blue,)),
+              icon: const Icon(Icons.account_circle, color: Color.fromARGB(255, 255, 255, 255),)),
           )
         ]
       ),

@@ -12,10 +12,10 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context); // listen: true
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,15 +24,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           value: themeProvider.inDarkMode,
           activeColor: Theme.of(context).colorScheme.secondary,
           onChanged: (bool value) {
-            // This is called when the user toggles the switch.
-            setState(() {
-              themeProvider.toggleTheme();
-            });
+            // Cambia el tema directamente
+            themeProvider.toggleTheme();
           },
         ),
-        const ElevatedButton(
-            onPressed: _getToken,
-            child: Text("Get Token"))
+        ElevatedButton(
+          onPressed: _getToken,
+          child: const Text("Get Token"),
+        ),
       ],
     );
   }
