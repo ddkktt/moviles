@@ -1,3 +1,5 @@
+import 'package:entregafinal/auth/auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,29 +14,43 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context); // listen: true
+@override
+Widget build(BuildContext context) {
+  final themeProvider = Provider.of<ThemeProvider>(context); // listen: true
+  String? email = FirebaseAuth.instance.currentUser?.email;
+  final bool isAdmin = Provider.of<RolesProvider>(context).isAdmin(email); // para admin
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("Set to: ${themeProvider.inDarkMode ? 'Light' : 'Dark'} mode"),
-        Switch(
-          value: themeProvider.inDarkMode,
-          activeColor: Theme.of(context).colorScheme.secondary,
-          onChanged: (bool value) {
-            // Cambia el tema directamente
-            themeProvider.toggleTheme();
-          },
-        ),
+  // Construcción de la lista de widgets
+  List<Widget> buildChildren() {
+    List<Widget> widgets = [
+      Text("Set to: ${themeProvider.inDarkMode ? 'Light' : 'Dark'} mode"),
+      Switch(
+        value: themeProvider.inDarkMode,
+        activeColor: Theme.of(context).colorScheme.secondary,
+        onChanged: (bool value) {
+          // Cambia el tema directamente
+          themeProvider.toggleTheme();
+        },
+      ),
+    ];
+
+    if (isAdmin) {
+      widgets.add(
         ElevatedButton(
           onPressed: _getToken,
           child: const Text("Get Token"),
         ),
-      ],
-    );
+      );
+    }
+
+    return widgets;
   }
+
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: buildChildren(),
+  );
+}
 }
 
 void _getToken() async {

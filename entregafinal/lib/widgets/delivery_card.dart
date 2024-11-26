@@ -65,6 +65,24 @@ class DeliveryCard extends StatelessWidget {
                 ]
               ),
             ),
+            RichText(
+              text: 
+              TextSpan(
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 20,
+                ),
+                children: [
+                  const TextSpan(
+                    text: 'Estado: ',
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                  TextSpan(
+                    text: delivery.status//to do .address?.formattedAddress,
+                  ),
+                ]
+              ),
+            ),
           ]
         ),
         onTap: () {

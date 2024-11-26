@@ -21,8 +21,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   late int currentScreen;
   
-  final titles = ['Inicio', 'Paquetes', 'Configuración', 'Escanear', 'Modo Dios'];
-  final screens = [const HomeScreen(), const PackageListScreen(), const SettingsScreen(), const ScannerScreen(), const AdminPackagesListScreen()];
+  final titles = ['Inicio', 'Paquetes',  'Escanear', 'Configuración', 'Modo Dios'];
+  final screens = [const HomeScreen(), const PackageListScreen(), const ScannerScreen(), const SettingsScreen(), const AdminPackagesListScreen()];
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     String? email = FirebaseAuth.instance.currentUser?.email;
-    final bool isAdmin = Provider.of<RolesProvider>(context).isAdmin(email);
+    final bool isAdmin = Provider.of<RolesProvider>(context).isAdmin(email); // para admin
 
     return Scaffold(
       appBar: AppBar(
@@ -75,13 +75,14 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Paquetes',
           ),
           const NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Config',
-          ),
-          const NavigationDestination(
             icon: Icon(Icons.camera),
             label: 'Scan',
           ),
+          const NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Config',
+          ),
+
         ] +
             (isAdmin
                 ? [const NavigationDestination(icon: Icon(Icons.admin_panel_settings), label: "Admin")]
