@@ -10,7 +10,6 @@ class DeliveryDetails extends StatelessWidget {
 
   goToMap() async {
     final availableMaps = await MapLauncher.installedMaps;
-    // Filter to get Google Maps specifically
     final googleMaps = availableMaps.firstWhere(
       (map) => map.mapType == MapType.google,
       orElse: () => availableMaps.first, // Fallback to first available map if Google Maps isn't installed
