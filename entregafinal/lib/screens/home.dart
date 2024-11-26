@@ -22,11 +22,9 @@ class HomeScreen extends StatelessWidget {
         ),
         child: BlocBuilder<ShipmentsBloc, ShipmentsState>(
           builder: (context, state) {
-            int totalPackages = 0;
             int enRepartoPackages = 0;
             
             if (state is ShipmentsLoaded) {
-              totalPackages = state.shipments.length;
               enRepartoPackages = state.shipments
                   .where((shipment) => shipment.status.toLowerCase() == 'en reparto')
                   .length;
