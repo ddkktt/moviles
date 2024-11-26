@@ -152,7 +152,7 @@ class DeliveryDetails extends StatelessWidget {
           children: [
             Icon(Icons.map_outlined),
             SizedBox(width: 8),
-            Text('Iniciar Entrega', style: TextStyle(fontSize: 18)),
+            Text('Iniciar ruta', style: TextStyle(fontSize: 18)),
           ],
         ),
       ),
