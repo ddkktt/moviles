@@ -70,18 +70,10 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            Text(
-                              "Tienes $totalPackages paquetes hoy",
-                              style: TextStyle(
-                                fontSize: 20,
-                                foreground: Paint()
-                                  ..strokeWidth = 4
-                                  ..color = Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            ),
+        
                             const SizedBox(height: 8),
                             Text(
-                              "$enRepartoPackages en reparto",
+                              "tienes $enRepartoPackages paquete pendiente",
                               style: TextStyle(
                                 fontSize: 20,
                                 foreground: Paint()
