@@ -11,7 +11,7 @@ class PackageListScreen extends StatefulWidget {
 }
 
 class _PackageListScreenState extends State<PackageListScreen> {
-  String _selectedFilter = 'all'; // 
+  String _selectedFilter = 'all'; // 'all', 'en_reparto', or 'entregado'
 
   Future<void> _onRefresh() async {
     context.read<ShipmentsBloc>().add(LoadShipmentsCounter());
@@ -19,7 +19,8 @@ class _PackageListScreenState extends State<PackageListScreen> {
   }
 
   Widget _buildFilterChips() {
-    return Container(
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: [
@@ -56,6 +57,23 @@ class _PackageListScreenState extends State<PackageListScreen> {
               fontWeight: _selectedFilter == 'en_reparto' ? FontWeight.bold : FontWeight.normal,
             ),
           ),
+          const SizedBox(width: 8),
+          FilterChip(
+            label: const Text('Entregado'),
+            selected: _selectedFilter == 'entregado',
+            onSelected: (selected) {
+              setState(() {
+                _selectedFilter = 'entregado';
+              });
+            },
+            backgroundColor: Colors.grey[200],
+            selectedColor: Colors.green[100],
+            checkmarkColor: Colors.green,
+            labelStyle: TextStyle(
+              color: _selectedFilter == 'entregado' ? Colors.green : Colors.black87,
+              fontWeight: _selectedFilter == 'entregado' ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
         ],
       ),
     );
@@ -65,9 +83,17 @@ class _PackageListScreenState extends State<PackageListScreen> {
     if (_selectedFilter == 'all') {
       return shipments;
     }
-    return shipments.where((shipment) => 
-      shipment.status.toLowerCase() == 'en reparto'
-    ).toList();
+    return shipments.where((shipment) {
+      final status = shipment.status.toLowerCase();
+      switch (_selectedFilter) {
+        case 'en_reparto':
+          return status == 'en reparto';
+        case 'entregado':
+          return status == 'entregado';
+        default:
+          return true;
+      }
+    }).toList();
   }
 
   Widget _buildShipmentsList(List<dynamic> shipments) {
@@ -81,7 +107,7 @@ class _PackageListScreenState extends State<PackageListScreen> {
             Icon(Icons.inbox_outlined, size: 64, color: Colors.grey[400]),
             const SizedBox(height: 16),
             Text(
-              'No hay paquetes ${_selectedFilter == "en_reparto" ? "en reparto" : ""}',
+              _getEmptyStateMessage(),
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey[600],
@@ -99,6 +125,17 @@ class _PackageListScreenState extends State<PackageListScreen> {
         return DeliveryCard(delivery: filteredShipments[index]);
       },
     );
+  }
+
+  String _getEmptyStateMessage() {
+    switch (_selectedFilter) {
+      case 'en_reparto':
+        return 'No hay paquetes en reparto';
+      case 'entregado':
+        return 'No hay paquetes entregados';
+      default:
+        return 'No hay paquetes disponibles';
+    }
   }
 
   @override
