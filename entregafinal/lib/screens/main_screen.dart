@@ -8,6 +8,8 @@ import 'package:entregafinal/screens/settings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:entregafinal/bloc/shipments_bloc.dart';
 
 class MainScreen extends StatefulWidget {
   final int initialScreen;
@@ -21,19 +23,25 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   late int currentScreen;
   
-  final titles = ['Inicio', 'Paquetes',  'Escanear', 'Configuración', 'Modo Dios'];
-  final screens = [const HomeScreen(), const PackageListScreen(), const ScannerScreen(), const SettingsScreen(), const AdminPackagesListScreen()];
+  final titles = ['Inicio', 'Paquetes', 'Escanear', 'Configuración', 'Modo Dios'];
+  final screens = [
+    const HomeScreen(),
+    const PackageListScreen(),
+    const ScannerScreen(),
+    const SettingsScreen(),
+    const AdminPackagesListScreen()
+  ];
 
   @override
   void initState() {
     super.initState();
-    currentScreen = widget.initialScreen;  // Establecemos la pantalla inicial
+    currentScreen = widget.initialScreen;
   }
 
   @override
   Widget build(BuildContext context) {
     String? email = FirebaseAuth.instance.currentUser?.email;
-    final bool isAdmin = Provider.of<RolesProvider>(context).isAdmin(email); // para admin
+    final bool isAdmin = Provider.of<RolesProvider>(context).isAdmin(email);
 
     return Scaffold(
       appBar: AppBar(
@@ -55,38 +63,49 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       body: screens[currentScreen],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentScreen,
-        onDestinationSelected: (index) {
-          setState(() {
-            currentScreen = index;
-          });
-        },
-        destinations: [
-          const NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'Inicio',
-          ),
-          const NavigationDestination(
-            icon: Badge(
-              label: Text("1"), // TODO: Actualiza el número de paquetes
-              child: Icon(Icons.apps),
-            ),
-            label: 'Paquetes',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.camera),
-            label: 'Scan',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Config',
-          ),
+      bottomNavigationBar: BlocBuilder<ShipmentsBloc, ShipmentsState>(
+        builder: (context, state) {
+          int enRepartoPackages = 0;
+          
+          if (state is ShipmentsLoaded) {
+            enRepartoPackages = state.shipments
+                .where((shipment) => shipment.status.toLowerCase() == 'en reparto')
+                .length;
+          }
 
-        ] +
-            (isAdmin
-                ? [const NavigationDestination(icon: Icon(Icons.admin_panel_settings), label: "Admin")]
-                : []),
+          return NavigationBar(
+            selectedIndex: currentScreen,
+            onDestinationSelected: (index) {
+              setState(() {
+                currentScreen = index;
+              });
+            },
+            destinations: [
+              const NavigationDestination(
+                icon: Icon(Icons.home),
+                label: 'Inicio',
+              ),
+              NavigationDestination(
+                icon: Badge(
+                  label: Text(enRepartoPackages.toString()),
+                  child: const Icon(Icons.apps),
+                ),
+                label: 'Paquetes',
+              ),
+              const NavigationDestination(
+                icon: Icon(Icons.camera),
+                label: 'Scan',
+              ),
+              const NavigationDestination(
+                icon: Icon(Icons.settings),
+                label: 'Config',
+              ),
+            ] +
+                (isAdmin
+                    ? [const NavigationDestination(icon: Icon(Icons.admin_panel_settings), label: "Admin")]
+                    : []),
+          );
+        },
       ),
     );
   }
