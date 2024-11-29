@@ -1,4 +1,10 @@
+import 'package:entregafinal/auth/auth_provider.dart';
+import 'package:entregafinal/screens/package_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:shipments_repository/src/models/shipment.dart';
+import 'package:entregafinal/bloc/shipments_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as google_maps;
 import 'package:map_launcher/map_launcher.dart';
@@ -14,6 +20,7 @@ class DeliveryDetails extends StatefulWidget {
 
 class _DeliveryDetailsState extends State<DeliveryDetails> {
   bool isEditing = false;
+  bool _deleted = false;
   String status = 'En Reparto';
   
   @override
@@ -23,14 +30,21 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildMap(),
-        _buildPackageDetails(),
-        const Spacer(),
-        _buildBottomButtons(),
-      ],
+  Widget build(BuildContext context) { 
+    return BlocBuilder<ShipmentsBloc, ShipmentsState>(
+      builder: (context, state) {
+        if (_deleted) {
+          debugPrint("delte product");//context.read<ShipmentsBloc>().add(UpdateShipmentStatus(_scanResult));
+        } 
+        return Column(
+          children: [
+            _buildMap(),
+            _buildPackageDetails(),
+            const Spacer(),
+            _buildBottomButtons(),
+          ],
+        );
+      }
     );
   }
 
@@ -82,9 +96,10 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
                   value: status,
                   isExpanded: true,
                   items: const [
+                    DropdownMenuItem(value: 'Nuevo', child: Text('Nuevo')),
                     DropdownMenuItem(value: 'En Reparto', child: Text('En Reparto')),
                     DropdownMenuItem(value: 'Entregado', child: Text('Entregado')),
-                    DropdownMenuItem(value: 'Perdido', child: Text('Otro')),
+                    DropdownMenuItem(value: 'Cancelado', child: Text('Cancelado')),
                   ],
                   onChanged: (String? value) {
                     if (value != null) {
@@ -211,6 +226,10 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
   }
 
   Widget _buildBottomButtons() {
+    
+    String? email = FirebaseAuth.instance.currentUser?.email;
+    final bool isAdmin = Provider.of<RolesProvider>(context).isAdmin(email);
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -245,7 +264,7 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
               ),
             ),
           const SizedBox(height: 8),
-          ElevatedButton(
+          (isAdmin ? ElevatedButton(
             onPressed: () {
               setState(() => isEditing = !isEditing);
             },
@@ -265,12 +284,12 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
                 Text(
                   isEditing ? 'Cancelar' : 'Editar detalles',
                   style: const TextStyle(fontSize: 18),
-                ),
-              ],
+                )
+              ]
             ),
-          ),
+          ): const SizedBox.shrink()),
           const SizedBox(height: 8),
-          ElevatedButton(
+          (!isAdmin ? ElevatedButton(
             onPressed: () async {
               final availableMaps = await MapLauncher.installedMaps;
               final googleMaps = availableMaps.firstWhere(
@@ -303,7 +322,31 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
                 Text('Iniciar ruta', style: TextStyle(fontSize: 18)),
               ],
             ),
-          ),
+          ): 
+          ElevatedButton(
+            onPressed: () => {
+              setState(() {
+                Navigator.of(context).pop();
+                _deleted = true;
+              })
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.black,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.map_outlined),
+                SizedBox(width: 8),
+                Text('Delete Shipment', style: TextStyle(fontSize: 18)),
+              ],
+            ),
+          )),
         ],
       ),
     );

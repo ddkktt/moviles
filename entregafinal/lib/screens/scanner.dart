@@ -27,7 +27,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
       if (result != "-1") {
         setState(() {
-          _scanResult = result; // El resultado escaneado
+          _scanResult = "paquete codigo: $result escaneado"; // El resultado escaneado
         });
       } else {
         setState(() {
