@@ -17,3 +17,31 @@ class AddShipment extends ShipmentsEvent{
   @override
   List<Object> get props => [shipment];
 }
+
+class DeleteShipment extends ShipmentsEvent{
+  final int trackingNumber;
+
+  const DeleteShipment(this.trackingNumber);
+
+  @override
+  List<Object> get props => [trackingNumber];
+}
+
+class UpdateShipment extends ShipmentsEvent{
+  final Shipment shipment;
+  final int trackingNumber;
+
+
+  const UpdateShipment(this.shipment, this.trackingNumber);
+
+  @override
+  List<Object> get props => [shipment];
+}
+
+class UpdateShipmentStatus extends ShipmentsEvent{
+  final String trackingNumber;
+
+
+  const UpdateShipmentStatus(this.trackingNumber);
+
+}

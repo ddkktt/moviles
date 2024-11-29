@@ -45,7 +45,7 @@ dependencies:
   map_launcher:
   flutter_svg:
   firebase_core: ^3.7.0
-  firebase_auth: ^5.3.1
+  firebase_auth: 
   firebase_ui_auth: ^1.16.0
   flutter_scan_barcode: ^0.0.1
   firebase_messaging: ^15.1.3

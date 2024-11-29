@@ -8,7 +8,7 @@ class Shipment extends Equatable{
   final String driver;
   final String packageInfo;
   final DateTime deliveryDate;
-  final String status; // 'Nuevo', 'Enviado', 'En Proceso de Entrega', 'Entregado', 'Cancelado', 'Perdido'
+  final String status; // 'Nuevo', 'En Reparto', 'Entregado', 'Cancelado'
   final String address;
   final List<double> loc;
 

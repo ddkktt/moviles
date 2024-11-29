@@ -20,6 +20,17 @@ class FirebaseShipmentRepo implements ShipmentRepo{
     }
   }
 
+  @override
+  Future<void> updateShipmentStatus(int trackingNumber) async {
+      var querySnapshot  = await shipmentsCol.where('trackingNumber', isEqualTo: trackingNumber)
+        .limit(1)
+        .get();
+
+      final curStatus = querySnapshot.docs[0].data()['status'];
+      final newStatus = curStatus=='Nuevo'?'En Reparto':curStatus=='Entregado'?'Cancelado':'Entregado';
+      return querySnapshot.docs[0].reference.update({'status': newStatus});
+  }
+
   // List<Shipment> list = [];
   // for (var doc in shipments.docs) {
   //   var jdoc = doc.data();
