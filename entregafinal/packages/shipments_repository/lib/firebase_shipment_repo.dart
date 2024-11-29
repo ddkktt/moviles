@@ -31,6 +31,20 @@ class FirebaseShipmentRepo implements ShipmentRepo{
       return querySnapshot.docs[0].reference.update({'status': newStatus});
   }
 
+  @override
+  Future<void> deleteShipment(int trackingNumber) async {
+    
+      debugPrint("++++++++++++++++++++++++++++++++++++++++++++++++");
+      debugPrint(shipmentsCol.where('trackingNumber', isEqualTo: trackingNumber)
+        .limit(1).get().toString());
+    await shipmentsCol.where('trackingNumber', isEqualTo: trackingNumber)
+        .limit(1).get().then((query) => 
+          query.docs.first.reference.delete()
+        
+    );
+         
+  }
+
   // List<Shipment> list = [];
   // for (var doc in shipments.docs) {
   //   var jdoc = doc.data();

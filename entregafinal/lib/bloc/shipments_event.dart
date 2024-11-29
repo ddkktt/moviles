@@ -23,8 +23,6 @@ class DeleteShipment extends ShipmentsEvent{
 
   const DeleteShipment(this.trackingNumber);
 
-  @override
-  List<Object> get props => [trackingNumber];
 }
 
 class UpdateShipment extends ShipmentsEvent{

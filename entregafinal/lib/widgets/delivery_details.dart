@@ -1,13 +1,12 @@
 import 'package:entregafinal/auth/auth_provider.dart';
-import 'package:entregafinal/screens/package_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:shipments_repository/src/models/shipment.dart';
-import 'package:entregafinal/bloc/shipments_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as google_maps;
 import 'package:map_launcher/map_launcher.dart';
+import 'package:shipments_repository/src/models/shipment.dart';
+import 'package:entregafinal/bloc/shipments_bloc.dart';
 
 class DeliveryDetails extends StatefulWidget {
   final Shipment delivery;
@@ -34,7 +33,8 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
     return BlocBuilder<ShipmentsBloc, ShipmentsState>(
       builder: (context, state) {
         if (_deleted) {
-          debugPrint("delte product");//context.read<ShipmentsBloc>().add(UpdateShipmentStatus(_scanResult));
+          debugPrint("delete product");
+          context.read<ShipmentsBloc>().add(DeleteShipment(widget.delivery.trackingNumber));
         } 
         return Column(
           children: [
@@ -341,7 +341,7 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.map_outlined),
+                Icon(Icons.delete),
                 SizedBox(width: 8),
                 Text('Delete Shipment', style: TextStyle(fontSize: 18)),
               ],

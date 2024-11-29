@@ -27,16 +27,7 @@ class ShipmentsBloc extends Bloc<ShipmentsEvent, ShipmentsState> {
       }
     });
     on<DeleteShipment>((event, emit) {
-      if (state is ShipmentsLoaded) {
-        final state = this.state as ShipmentsLoaded;
-        emit(
-          ShipmentsLoaded(
-            shipments: List.from(state.shipments)
-              ..removeWhere(
-                  (item) => item.trackingNumber == event.trackingNumber),
-          ),
-        );
-      }
+      shipmentRepo.deleteShipment(event.trackingNumber);
     });
     on<UpdateShipment>((event, emit) {
       if (state is ShipmentsLoaded) {

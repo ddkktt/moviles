@@ -11,7 +11,7 @@ class ScannerScreen extends StatefulWidget {
   const ScannerScreen({super.key});
 
   @override
-  _ScannerScreenState createState() => _ScannerScreenState();
+  State<ScannerScreen> createState() => _ScannerScreenState();
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
